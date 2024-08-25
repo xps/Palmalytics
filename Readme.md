@@ -17,7 +17,7 @@ The data can be stored in the same database your application already uses (e.g. 
 
 ## Getting Started
 
-1. Add the NuGet package from the Package Manager Console:
+1. Add the [storage-specific NuGet package][0] from the Package Manager Console:
 
     ```shell
     PM> Install-Package Palmalytics.SqlServer -Pre
@@ -117,3 +117,5 @@ While Palmalytics is in pre-release, you can get a free early-bird lifetime comm
 Contributions are welcome, whether they are bug reports, feature requests, or code contributions.
 
 By submitting a pull request, you relinquish any rights or claims to the changes you submit to the project and transfer the copyright of those changes to the project owner.
+
+[0]: https://www.nuget.org/packages?q=palmalytics
