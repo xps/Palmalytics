@@ -1,0 +1,12 @@
+:root {
+    --bs-box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+}
+
+body {
+    background: #f7f7f8;
+    color: #333;
+}
+
+#root > .container {
+    max-width: 1120px;
+}

@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <Title>Palmalytics Server-Side Web Analytics</Title>
+        <Description>A open-source, self-hosted, server-side web analytics library for ASP.NET applications and websites.</Description>
+        <Authors>Xavier Poinas</Authors>
+        <Copyright>Copyright (c) 2023 Xavier Poinas</Copyright>
+        <Version>0.1.0-alpha</Version>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Scripts\*.sql" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="BitFaster.Caching" Version="2.5.1" />
+        <PackageReference Include="Dapper" Version="2.1.35" />
+        <PackageReference Include="Dapper.SqlBuilder" Version="2.0.78" />
+        <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Palmalytics\Palmalytics.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Palmalytics.SqlServer.Tests" />
+    </ItemGroup>
+
+</Project>

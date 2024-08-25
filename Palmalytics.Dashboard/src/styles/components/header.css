@@ -1,0 +1,13 @@
+header {
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 15px;
+
+        img {
+            margin-right: 12px;
+            position: relative;
+            top: -3px;
+        }
+    }
+}

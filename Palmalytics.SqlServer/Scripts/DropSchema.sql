@@ -1,0 +1,5 @@
+﻿DROP TABLE IF EXISTS [{schema}].[{requestsTable}]
+DROP TABLE IF EXISTS [{schema}].[{sessionsTable}]
+DROP TABLE IF EXISTS [{schema}].[{geocodingTable}]
+DROP TABLE IF EXISTS [{schema}].[{settingsTable}]
+DROP SCHEMA IF EXISTS [{schema}]

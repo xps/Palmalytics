@@ -1,0 +1,19 @@
+﻿# User settings
+.vs
+*.user
+
+# Back-end build products
+*/bin
+*/obj
+
+# Front-end build products
+Palmalytics/Dashboard/WebRoot
+
+# Vite cache
+Palmalytics.Dashboard/.vite
+
+# Logs
+TestSite/Logs.txt
+
+# Local scripts
+*.ps1

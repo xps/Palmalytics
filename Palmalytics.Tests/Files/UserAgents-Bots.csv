@@ -1,0 +1,90 @@
+UserAgent,BrowserName
+Go-http-client/2.0,Go-http-client
+Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html),Googlebot
+"Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm) Chrome/103.0.5060.134 Safari/537.36",BingBot
+Sogou web spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07),Sogou Spider
+Chrome Privacy Preserving Prefetch Proxy,Chrome Privacy Preserving Prefetch Proxy
+"Mozilla/5.0 (Linux; Android 5.0) AppleWebKit/537.36 (KHTML, like Gecko) Mobile Safari/537.36 (compatible; Bytespider; spider-feedback@bytedance.com)",Bytespider
+"Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.5845.110 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",Googlebot
+Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/),aHrefs Bot
+Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots),Yandex Bot
+RainBot,Generic Bot
+serpstatbot/2.1 (advanced backlink tracking bot; https://serpstatbot.com/; abuse@serpstatbot.com),serpstatbot
+Mozilla/5.0 (compatible; BLEXBot/1.0; +http://webmeup-crawler.com/),BLEXBot Crawler
+"Mozilla/5.0 (Linux; Android 7.0;) AppleWebKit/537.36 (KHTML, like Gecko) Mobile Safari/537.36 (compatible; PetalBot;+https://webmaster.petalsearch.com/site/petalbot)",Petal Bot
+Mozilla/5.0 (compatible; CensysInspect/1.1; +https://about.censys.io/),CensysInspect
+Mozilla/5.0 (compatible; SeznamBot/4.0; +http://napoveda.seznam.cz/seznambot-intro/),Seznam Bot
+Mozilla/5.0 (compatible; MJ12bot/v1.4.8; http://mj12bot.com/),MJ12 Bot
+"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/601.2.4 (KHTML, like Gecko) Version/9.0.1 Safari/601.2.4 facebookexternalhit/1.1 Facebot Twitterbot/1.0",Facebook External Hit
+facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php),Facebook External Hit
+Mozilla/5.0 (compatible; intelx.io_bot +https://intelx.io),Intelligence X
+AdsBot-Google (+http://www.google.com/adsbot.html),Googlebot
+Mozilla/5.0 (compatible; DataForSeoBot/1.0; +https://dataforseo.com/dataforseo-bot),DataForSeoBot
+Mozilla/5.0 (compatible; DuckDuckGo-Favicons-Bot/1.0; +http://duckduckgo.com),DuckDuckGo Bot
+Mozilla/5.0 (compatible; SemrushBot/7~bl; +http://www.semrush.com/bot.html),Semrush Bot
+python-requests/2.31.0,Python Requests
+"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Safari/605.1.15 (Applebot/0.1; +http://www.apple.com/go/applebot)",Applebot
+python-requests/2.27.1,Python Requests
+ALittle Client,Generic Bot
+Go-http-client/1.1,Go-http-client
+Mozilla/5.0 (compatible; Discordbot/2.0; +https://discordapp.com),Discord Bot
+Mozilla/5.0 zgrab/0.x,zgrab
+"Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.5845.110 Mobile Safari/537.36 (compatible; AdsBot-Google-Mobile; +http://www.google.com/mobile/adsbot.html)",Googlebot
+"Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.5845.140 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",Googlebot
+GuzzleHttp/7,Guzzle (PHP HTTP Client)
+python-requests/2.25.1,Python Requests
+"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/600.2.5 (KHTML, like Gecko) Version/8.0.2 Safari/600.2.5 (Amazonbot/0.1; +https://developer.amazon.com/support/amazonbot)",Amazon Bot
+"Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0",Yandex Bot
+"Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",Googlebot
+GRequests/0.10,GRequests
+python-requests/2.21.0,Python Requests
+Mozilla/5.0 (Windows NT 6.1; WOW64) SkypeUriPreview Preview/0.5 skype-url-preview@microsoft.com,Skype URI Preview
+Mozilla/5.0 (compatible; Twingly Recon; twingly.com),Twingly Recon
+TelegramBot (like TwitterBot),TelegramBot
+Mozilla/5.0 (compatible; startmebot/1.0; +https://start.me/bot),start.me
+Googlebot-Image/1.0,Googlebot
+Iframely/1.3.1 (+https://iframely.com/docs/about) Atlassian,Iframely
+Mozilla/5.0 (compatible; t3versionsBot/1.0; +https://www.t3versions.com/bot),t3versions
+curl/7.47.0,curl
+Nextcloud Server Crawler,Generic Bot
+Twitterbot,Twitterbot
+Scrapy/2.9.0 (+https://scrapy.org),Scrapy
+"Mozilla/5.0 (compatible; DotBot/1.1; http://www.opensiteexplorer.org/dotbot, help@moz.com)",DotBot
+Python/3.11 aiohttp/3.8.4,aiohttp
+Mozilla/5.0 (compatible; Pinterestbot/1.0; +http://www.pinterest.com/bot.html),Pinterest
+Mozilla/5.0 (compatible; SeekportBot; +https://bot.seekport.com),Seekport
+"Expanse, a Palo Alto Networks company, searches across the global IPv4 space multiple times per day to identify customers&#39; presences on the Internet. If you would like to be excluded from our scans, please send IP addresses/domains to: scaninfo@paloaltonetworks.com",Expanse
+Mozilla/5.0 (compatible; Google-Site-Verification/1.0),Googlebot
+CheckMarkNetwork/1.0 (+http://www.checkmarknetwork.com/spider.html),Generic Bot
+Mozilla/5.0 (compatible; SemrushBot-SI/0.97; +http://www.semrush.com/bot.html),Semrush Bot
+Mozilla/5.0 (compatible; NetpeakCheckerBot/3.6; +https://netpeaksoftware.com/checker),Generic Bot
+Mozilla/5.0 AppleWebKit/537.36 Chrome/116.0.5845.96 Safari/537.36 Google-Ads-Conversions,Googlebot
+curl/7.54.0,curl
+"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36; 360Spider",360Spider
+Mozilla/5.0 (compatible; InternetMeasurement/1.0; +https://internet-measurement.com/),InternetMeasurement
+Mozilla/5.0 (compatible; GrapeshotCrawler/2.0; +http://www.grapeshot.co.uk/crawler.php),Grapeshot
+BoardReader Favicon Fetcher /1.0 info@boardreader.com,BoardReader
+Clickagy Intelligence Bot v2,Generic Bot
+Snap URL Preview Service; bot; snapchat; https://developers.snap.com/robots,Snap URL Preview Service
+Twitterbot/1.0,Twitterbot
+Iframely/1.3.1 (+https://iframely.com/docs/about) Notion,Iframely
+curl/7.29.0,curl
+Mozilla/5.0 (compatible; YaK/1.0; http://linkfluence.com/; bot@linkfluence.com),YaK
+Embarcadero URI Client/1.0,Embarcadero URI Client
+DomainStatsBot/1.0 (https://domainstats.com/pages/our-bot),DomainStatsBot
+"Mozilla/5.0 (X11; Linux x86_64)  AppleWebKit/537.36 (KHTML, like Gecko; Google Web Preview)  Chrome/116.0.5845.96 Safari/537.36",Googlebot
+"Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e YisouSpider/5.0 Safari/602.1",Generic Bot
+okhttp/3.12.12,OkHttp
+Mozilla/5.0 (compatible; um-LN/1.0; mailto: techinfo@ubermetrics-technologies.com; Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1,uMBot
+Mozilla/5.0 (compatible; NetcraftSurveyAgent/1.0; +info@netcraft.com),Netcraft Survey Bot
+Mozilla/5.0 (l9scan/2.0.730323e2333323e21333e2637313; +https://leakix.net),LeakIX
+Mozilla/5.0 (compatible; Linux x86_64; Mail.RU_Bot/Favicons/2.0; +https://help.mail.ru/webmaster/indexing/robots),Mail.Ru Bot
+Mozilla/5.0 (compatible; YandexFavicons/1.0; +http://yandex.com/bots),Yandex Bot
+SEMrushBot,Semrush Bot
+Java/11.0.20,Java
+The Knowledge AI,The Knowledge AI
+user_agent: rc-crawler,Generic Bot
+"Mozilla/5.0 (Linux;u;Android 4.2.2;zh-cn;) AppleWebKit/534.46 (KHTML,like Gecko) Version/5.1 Mobile Safari/10600.6.3 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)",Baidu Spider
+Java/11.0.18,Java
+"Mozilla/5.0 (compatible; Bytespider; spider-feedback@bytedance.com) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.0.0 Safari/537.36",Bytespider
+Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html),Baidu Spider

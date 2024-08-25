@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <Title>Palmalytics | Server-Side ASP.NET Core Web Analytics</Title>
+        <Description>A open-source, self-hosted, server-side web analytics library for ASP.NET Core MVC applications and websites.</Description>
+        <Authors>Xavier Poinas</Authors>
+        <Copyright>Copyright (c) 2024 Xavier Poinas</Copyright>
+        <Version>0.1.0-alpha</Version>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="Dashboard\WebRoot\**\*.*" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="Data\public_suffix_list.dat.gz" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Palmalytics.Tests" />
+        <InternalsVisibleTo Include="Palmalytics.Toolkit" />
+        <InternalsVisibleTo Include="Palmalytics.SqlServer" />
+    </ItemGroup>
+    
+</Project>

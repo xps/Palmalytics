@@ -1,0 +1,3 @@
+[*]
+dotnet_diagnostic.CS4014.severity = error
+dotnet_diagnostic.CA2254.severity = warning

@@ -1,0 +1,21 @@
+#period-selector {
+    .dropdown-toggle {
+        padding: 5px 12px 7px 12px;
+        background-color: #fff;
+        border: 1px solid #e6eaf1;
+        
+        &:hover {
+            background-color: #fff;
+            border-color: #d0d0d0;
+        }
+    
+        &.btn.show {
+            border-color: var(--bs-border-color-translucent);
+        }
+    
+        &::after {
+            margin-left: 8px;
+            vertical-align: 3px;
+        }
+    }
+}

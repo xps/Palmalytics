@@ -1,0 +1,30 @@
+﻿{
+    "name": "palmalytics-dashboard",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build && (if exist ../Palmalytics/Dashboard/WebRoot rd /s /q \"../Palmalytics/Dashboard/WebRoot\") && move dist ../Palmalytics/Dashboard/WebRoot",
+        "build-linux": "vite build && rm -rf ../Palmalytics/Dashboard/WebRoot/ && mv dist ../Palmalytics/Dashboard/WebRoot",
+        "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+        "preview": "vite preview",
+        "test": "vitest"
+    },
+    "dependencies": {
+        "apexcharts": "^3.52.0",
+        "react": "^18.3.1",
+        "react-apexcharts": "^1.4.1",
+        "react-dom": "^18.3.1",
+        "react-feather": "^2.0.10"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-react": "^4.3.1",
+        "eslint": "^8.57.0",
+        "eslint-plugin-react": "^7.35.0",
+        "eslint-plugin-react-hooks": "^4.6.2",
+        "eslint-plugin-react-refresh": "^0.4.9",
+        "vite": "^5.4.0",
+        "vitest": "^2.0.5"
+    }
+}

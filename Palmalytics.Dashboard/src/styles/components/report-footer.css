@@ -1,0 +1,12 @@
+.report-footer {
+    display: flex;
+    border-top: 1px solid #eee;
+    margin-top: 20px;
+    padding-top: 10px;
+    color: #999;
+    font-size: 12px;
+
+    .response-time {
+        margin-left: auto;
+    }
+}

@@ -1,0 +1,30 @@
+.pager {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+
+    .buttons .btn {
+        width: 26px;
+        height: 26px;
+        margin-left: 10px;
+
+        svg {
+            position: relative;
+            top: -4px;
+            left: -3px;
+        }
+
+        &:disabled {
+            border-color: #ccc;
+            color: #ccc
+        }
+    }
+}
+
+.pager-no-data {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

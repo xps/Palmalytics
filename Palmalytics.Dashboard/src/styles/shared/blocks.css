@@ -1,0 +1,26 @@
+.block {
+    background: white;
+    border: 1px solid #e6eaf1;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 40px;
+
+    &.tabs-content {
+        border-top-left-radius: 0;
+    }
+
+    .spinner {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 200px;
+        padding: 0 20px;
+        
+        img {
+            width: 100px;
+            height: 100px;
+            opacity: 0.5;
+        }
+    }
+}

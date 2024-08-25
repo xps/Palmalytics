@@ -1,0 +1,97 @@
+#chart {
+    #dates {
+        position: relative;
+        font-size: 1.3rem;
+        padding: 0 20px 20px 20px;
+        margin-bottom: 17px;
+        border-bottom: 1px solid #eee;
+        text-align: center;
+
+        #interval-selector {
+            position: absolute;
+            right: 0px;
+            bottom: 10px;
+        }
+    }
+
+    #numbers {
+        display: flex;
+        padding-top: 10px;
+    
+        .number {
+            flex: 1;
+            padding: 5px 20px 10px 20px;
+            margin: 0 3px;
+            background: none;
+            border: none;
+            text-align: center;
+    
+            .value {
+                font-size: 1.3rem;
+            }
+    
+            .label {
+                font-size: 1rem;
+            }
+
+            &:disabled {
+                color: inherit;
+            }
+            
+            &:hover:not(.active) {
+                cursor: pointer;
+                background: #fafafa;
+            }
+    
+            &.active .label {
+                text-decoration: underline;
+                text-underline-offset: 6px;
+                text-decoration-thickness: 2px;
+            }
+        }
+    
+        .separator {
+            border-right: 1px solid #eee;
+            margin: 0 5px;
+        }
+    }
+
+    .chart-tooltip {
+        padding: 10px;
+
+        .tooltip-title {
+            font-weight: bold;
+        }
+    }
+
+    .report-footer {
+        margin-top: 3px;
+    }
+
+    &.loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 620px;
+    }
+
+    @media (max-width: 768px) {
+        #dates {
+            padding-bottom: 35px;
+        }
+
+        #numbers {
+            flex-wrap: wrap;
+
+            .number {
+                flex: auto;
+                width: 50%;
+                margin: 0;
+            }
+
+            .separator {
+                display: none;
+            }
+        }
+    }
+}
