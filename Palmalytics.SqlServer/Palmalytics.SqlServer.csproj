@@ -3,12 +3,20 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <LangVersion>latest</LangVersion>
-        <Title>Palmalytics Server-Side Web Analytics</Title>
-        <Description>A open-source, self-hosted, server-side web analytics library for ASP.NET applications and websites.</Description>
+        <Title>SQL Server storage for Palmalytics</Title>
+        <Description>SQL Server storage for Palmalytics, a self-hosted, first-party, server-side web analytics dashboard for ASP.NET Core applications</Description>
         <Authors>Xavier Poinas</Authors>
-        <Copyright>Copyright (c) 2023 Xavier Poinas</Copyright>
+        <Copyright>Copyright (c) 2024 Xavier Poinas</Copyright>
         <Version>0.1.0-alpha</Version>
+        <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+        <PackageReadmeFile>Readme.md</PackageReadmeFile>
+        <PackageProjectUrl>https://github.com/xps/Palmalytics</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/xps/Palmalytics</RepositoryUrl>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="../Readme.md" pack="true" PackagePath="." />
+    </ItemGroup>
 
     <ItemGroup>
       <EmbeddedResource Include="Scripts\*.sql" />
