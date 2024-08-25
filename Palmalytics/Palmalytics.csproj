@@ -12,10 +12,12 @@
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
         <PackageProjectUrl>https://github.com/xps/Palmalytics</PackageProjectUrl>
         <RepositoryUrl>https://github.com/xps/Palmalytics</RepositoryUrl>
+        <PackageIconUrl>Logo-64x64.png</PackageIconUrl>
     </PropertyGroup>
 
     <ItemGroup>
         <None Include="../Readme.md" pack="true" PackagePath="." />
+        <None Include="../Assets/Logo-64x64.png" pack="true" PackagePath="." />
     </ItemGroup>
     
     <ItemGroup>

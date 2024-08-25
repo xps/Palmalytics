@@ -53,7 +53,7 @@ The data can be stored in the same database your application already uses (e.g. 
     
 4. Navigate to `https://<your-app>/palmalytics` to see your dashboard.
 
-<img src="Documentation/screenshot.webp" alt="Screenshot of the Palmalytics dashboard" />
+<img src="Assets/Screenshot.webp" alt="Screenshot of the Palmalytics dashboard" />
 
 ## Dashboard Authorization
 
