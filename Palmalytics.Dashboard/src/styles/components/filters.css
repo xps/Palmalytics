@@ -1,10 +1,15 @@
 #filters {
+    .title {
+        margin-left: 5px;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    
     .filter {
         background-color: #fff;
         border: 1px solid #e6eaf1;
         border-radius: 6px;
         padding: 4px 12px 8px 12px;
-
         display: flex;
         align-items: center;
         margin-right: 10px;

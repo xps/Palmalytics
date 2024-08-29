@@ -53,8 +53,8 @@ function App() {
                     <OSTable period={period} filters={filters} onAddFilter={handleAddFilter} />
                 </Tab>
             </Tabs>
+            <Footer />
         </div>
-        <Footer />
     </>;
 }
 

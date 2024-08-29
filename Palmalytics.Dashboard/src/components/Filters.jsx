@@ -20,9 +20,9 @@ export default function Filters({ period, filters, onPeriodChanged, onFiltersCha
         <div id="filters" className="d-flex align-items-end mb-3">
             { keys.length > 0 &&
                 <div>
-                    {/* <div className="mb-1 fw-bold">
+                    <div className="title">
                         Filters:
-                    </div> */}
+                    </div>
                     <div className="d-flex flex-wrap">
                         {keys.map(key => {
                             return (
