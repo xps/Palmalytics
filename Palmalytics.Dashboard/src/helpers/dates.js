@@ -1,6 +1,8 @@
 const formatMap = {
     'd': d => d.toLocaleString('default', { day: 'numeric' }),
     'dd': d => d.toLocaleString('default', { day: '2-digit' }),
+    'ddd': d => d.toLocaleString('default', { weekday: 'short' }),
+    'dddd': d => d.toLocaleString('default', { weekday: 'long' }),
     'M': d => d.toLocaleString('default', { month: 'numeric' }),
     'MM': d => d.toLocaleString('default', { month: '2-digit' }),
     'MMM': d => d.toLocaleString('default', { month: 'short' }),

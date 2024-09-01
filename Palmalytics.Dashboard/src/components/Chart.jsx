@@ -33,13 +33,13 @@ function formatAxisDate(interval, value) {
 
 function formatTooltipDate(interval, value) {
     if (interval == 'days')
-        return dates.format(value, "d MMM yyyy");
+        return dates.format(value, "ddd d MMM yyyy");
     if (interval == 'weeks')
         return 'Week of ' + dates.format(value, "d MMM yyyy");
     if (interval == 'months')
-        return 'Month of ' + dates.format(value, 'MMMM yyyy');
+        return dates.format(value, 'MMMM yyyy');
     if (interval == 'years')
-        return 'Year ' + dates.format(value, "yyyy");
+        return dates.format(value, "yyyy");
     return value;
 }
 
