@@ -9,6 +9,18 @@ import * as dates from '../helpers/dates';
 import * as numbers from '../helpers/numbers';
 import * as durations from '../helpers/durations';
 
+const availableIntervalsPerPeriod = {
+    'today': ['days'],
+    'last-7-days': ['days'],
+    'last-30-days': ['days'],
+    'last-12-months': ['days', 'weeks', 'months'],
+    'month-to-date': ['days'],
+    'last-month': ['days'],
+    'year-to-date': ['days', 'weeks', 'months'],
+    'last-year': ['days', 'weeks', 'months'],
+    'all-time': ['weeks', 'months', 'years'],
+};
+
 function formatAxisValue(property, value) {
     if (property == 'Bounce Rate')
         return numbers.percent(value);
@@ -62,11 +74,15 @@ export default function Chart({ period, filters }) {
     const [responseTime, setResponseTime] = useState(0);
 
     useEffect(() => {
-        const time = new Date().getTime();
-        api.getChart(period, interval, property, filters).then(chartData => {
-            setChartData(chartData);
-            setResponseTime(new Date().getTime() - time);
-        });
+        if (!availableIntervalsPerPeriod[period].includes(interval)) {
+            setInterval(availableIntervalsPerPeriod[period][0]);
+        } else {
+            const time = new Date().getTime();
+            api.getChart(period, interval, property, filters).then(chartData => {
+                setChartData(chartData);
+                setResponseTime(new Date().getTime() - time);
+            });
+        }
     }, [period, interval, property, filters]);
 
     useEffect(() => {
@@ -148,7 +164,7 @@ export default function Chart({ period, filters }) {
             <div id="dates">
                 <div>{dates.format(chartData.dateFrom)} to {dates.format(chartData.dateTo)}</div>
                 <div><small>{numbers.commas(chartData.totalDays)} Days  • {numbers.commas(chartOptions.series[0].data.length)} Data Points</small></div>
-                <IntervalSelector value={interval} period={period} onChanged={setInterval} />
+                <IntervalSelector value={interval} intervals={availableIntervalsPerPeriod[period]} onChanged={setInterval} />
             </div>
             <div id="numbers">
                 <button className={'number ' + (property == 'Sessions' ? 'active' : '')} onClick={() => setProperty('Sessions')} disabled={property == "Sessions"}>
