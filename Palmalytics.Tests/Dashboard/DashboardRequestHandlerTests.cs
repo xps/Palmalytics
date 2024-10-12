@@ -36,7 +36,7 @@ namespace Palmalytics.Tests.Dashboard
         public void Test_DashboardRequestHandler_Returns_Static_Files()
         {
             // Arrange
-            var request = TestRequestsHelper.CreateRequest("/images/favicon.svg");
+            var request = TestRequestsHelper.CreateRequest("/images/palmalytics.svg");
 
             // Act
             var result = requestHandler.GetResultForRequest(request);
