@@ -3,6 +3,8 @@
         display: flex;
         margin-bottom: -1px;
         align-items: flex-end;
+        overflow-x: auto;
+        max-width: 100%;
     
         .tab-header {
             padding: 10px 20px;
@@ -11,7 +13,8 @@
             border-top-left-radius: 6px;
             border-top-right-radius: 6px;
             font-size: 16px;
-            min-width: 80px;
+            min-width: min-content;
+            white-space: nowrap;
     
             &.active {
                 background: #fff;
