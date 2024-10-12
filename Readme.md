@@ -103,6 +103,17 @@ Future support is planned for older versions of .NET (including .NET Framework 4
 The project is currently in alpha release – use at your own risk.
 
 
+## Change log
+
+### Version 0.2.0-alpha (12 Oct 2024)
+
+ - Added UTM parameters stats to dashboard
+ - Added 'not set' values in referrer stats
+
+### Version 0.1.0-alpha (25 Aug 2024)
+
+ - Initial version
+
 ## Licensing
 
 Copyright © 2024 Xavier Poinas
