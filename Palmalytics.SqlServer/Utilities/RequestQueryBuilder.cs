@@ -42,16 +42,44 @@ namespace Palmalytics.SqlServer.Utilities
         {
             if (!string.IsNullOrWhiteSpace(filters?.Referrer))
                 Where("s.[ReferrerName] = @Referrer", new { filters.Referrer });
+                
             if (!string.IsNullOrWhiteSpace(filters?.ReferrerUrl))
                 Where("s.[Referrer] = @ReferrerUrl", new { filters.ReferrerUrl });
 
+            if (filters?.UtmSource == "(not set)")
+                Where("s.[UtmSource] IS NULL");
+            else if (!string.IsNullOrWhiteSpace(filters?.UtmSource))
+                Where("s.[UtmSource] = @UtmSource", new { filters.UtmSource });
+
+            if (filters?.UtmMedium == "(not set)")
+                Where("s.[UtmMedium] IS NULL");
+            else if (!string.IsNullOrWhiteSpace(filters?.UtmMedium))
+                Where("s.[UtmMedium] = @UtmMedium", new { filters.UtmMedium });
+
+            if (filters?.UtmCampaign == "(not set)")
+                Where("s.[UtmCampaign] IS NULL");
+            else if (!string.IsNullOrWhiteSpace(filters?.UtmCampaign))
+                Where("s.[UtmCampaign] = @UtmCampaign", new { filters.UtmCampaign });
+
+            if (filters?.UtmContent == "(not set)")
+                Where("s.[UtmContent] IS NULL");
+            else if (!string.IsNullOrWhiteSpace(filters?.UtmContent))
+                Where("s.[UtmContent] = @UtmContent", new { filters.UtmContent });
+
+            if (filters?.UtmTerm == "(not set)")
+                Where("s.[UtmTerm] IS NULL");
+            else if (!string.IsNullOrWhiteSpace(filters?.UtmTerm))
+                Where("s.[UtmTerm] = @UtmTerm", new { filters.UtmTerm });
+
             if (!string.IsNullOrWhiteSpace(filters?.Browser))
                 Where("s.[BrowserName] = @Browser", new { filters.Browser });
+
             if (!string.IsNullOrWhiteSpace(filters?.BrowserVersion))
                 Where("s.[BrowserVersion] = @BrowserVersion", new { filters.BrowserVersion });
 
             if (!string.IsNullOrWhiteSpace(filters?.OS))
                 Where("s.[OSName] = @OS", new { filters.OS });
+
             if (!string.IsNullOrWhiteSpace(filters?.OSVersion))
                 Where("s.[OSVersion] = @OSVersion", new { filters.OSVersion });
 

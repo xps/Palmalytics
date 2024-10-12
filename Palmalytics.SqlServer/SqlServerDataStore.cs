@@ -361,6 +361,55 @@ namespace Palmalytics.SqlServer
             };
         }
 
+        // TODO: constants for parameters
+        public TableData GetUtmParameters(DateTime? dateFrom, DateTime? dateTo, string parameter, Filters filters, int page)
+        {
+            var estimatedRowCount = EstimateSessionCount(dateFrom, dateTo);
+            var samplingFactor = GetSamplingFactor(estimatedRowCount);
+
+            var column = parameter switch {
+                "source" => "UtmSource",
+                "medium" => "UtmMedium",
+                "campaign" => "UtmCampaign",
+                "term" => "UtmTerm",
+                "content" => "UtmContent",
+                _ => throw new ArgumentException($"Invalid parameter: {parameter}", nameof(parameter))
+            };
+
+            var where = (SessionQueryBuilder sqlBuilder) => sqlBuilder
+                .WhereDates(dateFrom, dateTo)
+                .WhereFilters(filters)
+                .WhereSampling(samplingFactor);
+
+            var totalQuery = new SessionQueryBuilder(schema, requestsTable, sessionsTable)
+                .Select($"COUNT(DISTINCT ISNULL({column}, '(not set)')) AS [RowCount]")
+                .Select($"{samplingFactor} * COUNT(1) AS [Total]")
+                .Where(where)
+                .GetTemplate();
+
+            var (totalRows, totalSessions) = QuerySingle<(int, int)>(totalQuery.RawSql, totalQuery.Parameters);
+
+            var query = new SessionQueryBuilder(schema, requestsTable, sessionsTable)
+                .Select($"ISNULL({column}, '(not set)') AS [Label]")
+                .Select($"{samplingFactor} * COUNT(1) AS [Value]")
+                .Select($"100.0 * {samplingFactor} * COUNT(1) / {totalSessions} AS [Percentage]")
+                .Where(where)
+                .GroupBy($"ISNULL({column}, '(not set)')")
+                .OrderBy("COUNT(1) DESC")
+                .Paging(page, pageSize)
+                .GetTemplate();
+
+            var data = Query<TableDataItem>(query.RawSql, query.Parameters).ToList();
+
+            return new TableData
+            {
+                TotalRows = totalRows,
+                PageCount = (int)Math.Ceiling(totalRows / (float)pageSize),
+                Rows = data,
+                SamplingFactor = samplingFactor
+            };
+        }
+
         public TableData GetCountries(DateTime? dateFrom, DateTime? dateTo, Filters filters, int page)
         {
             var estimatedRowCount = EstimateSessionCount(dateFrom, dateTo);

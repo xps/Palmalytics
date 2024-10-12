@@ -25,6 +25,7 @@ namespace Palmalytics
         TopData GetTopData(DateTime? dateFrom, DateTime? dateTo, Filters filters);
         ChartData GetChart(DateTime? dateFrom, DateTime? dateTo, Interval interval, string property, Filters filters);
         TableData GetReferrers(DateTime? dateFrom, DateTime? dateTo, Filters filters, int page);
+        TableData GetUtmParameters(DateTime? dateFrom, DateTime? dateTo, string parameter, Filters filters, int page);
         TableData GetCountries(DateTime? dateFrom, DateTime? dateTo, Filters filters, int page);
         TableData GetTopPages(DateTime? dateFrom, DateTime? dateTo, Filters filters, int page);
         TableData GetEntryPages(DateTime? dateFrom, DateTime? dateTo, Filters filters, int page);

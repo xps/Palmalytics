@@ -2,8 +2,10 @@
 import PeriodSelector from "./PeriodSelector";
 
 function formatFilterName(key) {
-    return key.replace(/([A-Z])/g, ' $1')
+    return key
+        .replace(/([A-Z])/g, ' $1')
         .replace(/^./, str => str.toUpperCase())
+        .replace(/\bUtm\b/g, 'UTM')
         .replace(/\bOs\b/g, 'OS')
         .replace(/\bPath\b/g, 'Page');
 }

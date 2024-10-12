@@ -33,7 +33,7 @@ export function buildUrl(path, parameters, filters, page) {
             url.searchParams.append(key, filters[key]);
     }
 
-    if (typeof(page) !== undefined && page != 1) {
+    if (page && page != 1) {
         url.searchParams.append("page", page);
     }
 
@@ -73,6 +73,12 @@ export function getOperatingSystems(period, filters, page) {
 export function getReferrers(period, filters, page) {
     var url = buildUrl("referrers", { period }, filters, page);
     console.log("getReferrers", period, filters, page, url);
+    return get(url);
+}
+
+export function getUtmParameter(parameter, period, filters, page) {
+    var url = buildUrl("utm-parameters", { parameter, period }, filters, page);
+    console.log("getUtmParameters", parameter, period, filters, page, url);
     return get(url);
 }
 

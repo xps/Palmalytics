@@ -184,6 +184,13 @@ namespace Palmalytics.Dashboard
             return Json(chartData);
         }
 
+        public Result GetUtmParameters(string parameter, string period, Filters filters, int page = 1)
+        {
+            var dates = DateHelpers.GetDateRangeForPeriod(period);
+            var chartData = dataStore.GetUtmParameters(dates.DateFrom, dates.DateTo, parameter, filters, page);
+            return Json(chartData);
+        }
+
         public Result GetCountries(string period, Filters filters, int page = 1)
         {
             var dates = DateHelpers.GetDateRangeForPeriod(period);

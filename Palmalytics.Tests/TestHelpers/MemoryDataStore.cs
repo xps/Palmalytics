@@ -77,6 +77,11 @@ namespace Palmalytics.Tests.TestHelpers
             throw new NotImplementedException();
         }
 
+        public TableData GetUtmParameters(DateTime? dateFrom, DateTime? dateTo, string parameter, Filters filters, int page)
+        {
+            throw new NotImplementedException();
+        }
+
         public TableData GetCountries(DateTime? dateFrom, DateTime? dateTo, Filters filters, int page)
         {
             throw new NotImplementedException();
