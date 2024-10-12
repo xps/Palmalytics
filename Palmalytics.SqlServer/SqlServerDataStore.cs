@@ -329,11 +329,10 @@ namespace Palmalytics.SqlServer
             var where = (SessionQueryBuilder sqlBuilder) => sqlBuilder
                 .WhereDates(dateFrom, dateTo)
                 .WhereFilters(filters)
-                .Where($"{column} IS NOT NULL")
                 .WhereSampling(samplingFactor);
 
             var totalQuery = new SessionQueryBuilder(schema, requestsTable, sessionsTable)
-                .Select($"COUNT(DISTINCT {column}) AS [RowCount]")
+                .Select($"COUNT(DISTINCT ISNULL({column}, '(not set)')) AS [RowCount]")
                 .Select($"{samplingFactor} * COUNT(1) AS [Total]")
                 .Where(where)
                 .GetTemplate();
@@ -341,11 +340,11 @@ namespace Palmalytics.SqlServer
             var (totalRows, totalSessions) = QuerySingle<(int, int)>(totalQuery.RawSql, totalQuery.Parameters);
 
             var query = new SessionQueryBuilder(schema, requestsTable, sessionsTable)
-                .Select($"{column} AS [Label]")
+                .Select($"ISNULL({column}, '(not set)') AS [Label]")
                 .Select($"{samplingFactor} * COUNT(1) AS [Value]")
                 .Select($"100.0 * {samplingFactor} * COUNT(1) / {totalSessions} AS [Percentage]")
                 .Where(where)
-                .GroupBy(column)
+                .GroupBy($"ISNULL({column}, '(not set)')")
                 .OrderBy("COUNT(1) DESC")
                 .Paging(page, pageSize)
                 .GetTemplate();

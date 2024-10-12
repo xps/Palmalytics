@@ -40,9 +40,11 @@ namespace Palmalytics.SqlServer.Utilities
 
         public RequestQueryBuilder WhereFilters(Filters filters)
         {
-            if (!string.IsNullOrWhiteSpace(filters?.Referrer))
+            if (filters?.Referrer == "(not set)")
+                Where("s.[ReferrerName] IS NULL");
+            else if (!string.IsNullOrWhiteSpace(filters?.Referrer))
                 Where("s.[ReferrerName] = @Referrer", new { filters.Referrer });
-                
+
             if (!string.IsNullOrWhiteSpace(filters?.ReferrerUrl))
                 Where("s.[Referrer] = @ReferrerUrl", new { filters.ReferrerUrl });
 
