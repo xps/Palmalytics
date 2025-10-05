@@ -149,6 +149,12 @@ namespace Palmalytics.Services
                 device.BrowserName = "Vivaldi";
                 device.BrowserVersion = userAgent.Capture(@"Vivaldi/(\d+)");
             }
+            else if (userAgent.Contains("Brave/"))
+            {
+                // Brave
+                device.BrowserName = "Brave";
+                device.BrowserVersion = userAgent.Capture(@"Brave/(\d+)");
+            }
             else if (userAgent.Contains("VivoBrowser/"))
             {
                 // Vivo
