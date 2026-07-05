@@ -105,6 +105,13 @@ The project is currently in alpha release – use at your own risk.
 
 ## Change log
 
+### Version 0.3.0-alpha (5 Jul 2026)
+
+ - Automatically decode URLs
+ - Updated Dapper
+ - Updated public suffix list
+ - Added detection of Brave browser
+
 ### Version 0.2.0-alpha (12 Oct 2024)
 
  - Added UTM parameters stats to dashboard
