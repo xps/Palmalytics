@@ -132,7 +132,7 @@ namespace Palmalytics.Dashboard
 
         public Result GetPerformanceStats()
         {
-            var timings = TrackingMiddleware.PerformanceStats.Reverse();
+            var timings = Enumerable.Reverse(TrackingMiddleware.PerformanceStats);
 
             if (!timings.Any())
                 return Json(new { mean = 0, average = 0, timings });
