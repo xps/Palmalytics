@@ -40,7 +40,7 @@ namespace Palmalytics.Services
             var requestData = new RequestData
             {
                 DateUtc = DateTime.UtcNow,
-                Path = request.Path
+                Path = Uri.UnescapeDataString(request.Path)
             };
 
             if (options.CollectQueryString)

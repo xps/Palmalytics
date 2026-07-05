@@ -40,6 +40,24 @@ namespace Palmalytics.Tests.Services
         }
 
         [Fact]
+        public void Test_RequestParser_Parse_Decodes_Path()
+        {
+            // Arrange
+            var options = new PalmalyticsParserOptions();
+            var parser = CreateRequestParser(options);
+
+            var request = CreateRequest(
+                path: "/%D1%82%D0%B5%D1%81%D1%82"
+            );
+
+            // Act
+            var result = parser.Parse(request);
+
+            // Assert
+            result.Path.Should().Be("/тест");
+        }
+
+        [Fact]
         public void Test_RequestParser_Parse_With_Missing_Data()
         {
             // Arrange
