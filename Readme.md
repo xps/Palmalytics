@@ -114,13 +114,22 @@ The project is currently in alpha release – use at your own risk.
 
  - Initial version
 
+
 ## Licensing
 
-Copyright © 2024 Xavier Poinas
+Copyright 2026 Xavier Poinas
 
-Palmalytics is licensed under the GNU General Public License (GPL v3), which means that if you include it in your project, you will need to release its source code to comply with the terms of the license. If you don’t want to do that, you can obtain a commercial license.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-While Palmalytics is in pre-release, you can get a free early-bird lifetime commercial license by emailing [licensing@palmalytics.com](mailto:licensing@palmalytics.com). This includes free upgrades to all future versions, including major versions.
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
 
 ## Contributing
