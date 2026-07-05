@@ -7,7 +7,7 @@
         <Description>SQL Server storage for Palmalytics, a self-hosted, first-party, server-side web analytics dashboard for ASP.NET Core applications</Description>
         <Authors>Xavier Poinas</Authors>
         <Copyright>Copyright (c) 2024 Xavier Poinas</Copyright>
-        <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
         <PackageProjectUrl>https://github.com/xps/Palmalytics</PackageProjectUrl>
         <RepositoryUrl>https://github.com/xps/Palmalytics</RepositoryUrl>
