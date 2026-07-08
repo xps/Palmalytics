@@ -22,7 +22,7 @@ The data can be stored in the same database your application already uses (e.g. 
     ```shell
     PM> Install-Package Palmalytics.SqlServer -Pre
     ```
-    
+
 2. Register services in your `Startup.cs` and configure the SQL Server storage:
 
     ```csharp
@@ -39,7 +39,7 @@ The data can be stored in the same database your application already uses (e.g. 
         // ...other services
     }
     ```
-    
+
 3. Register the middleware:
 
     ```csharp
@@ -50,7 +50,7 @@ The data can be stored in the same database your application already uses (e.g. 
         // ...other middleware
     }
     ```
-    
+
 4. Navigate to `https://<your-app>/palmalytics` to see your dashboard.
 
 <img src="Assets/Screenshot.webp" alt="Screenshot of the Palmalytics dashboard" />
@@ -98,12 +98,14 @@ Currently, Palmalytics requires:
 We may add support for other data stores (Postgres, SQLite…).
 
 
-## Project Status
-
-The project is currently in alpha release – use at your own risk.
-
-
 ## Change log
+
+### Version 1.0.0-rc (8 Jul 2026)
+
+ - Now targets .NET 8
+ - Updated dependencies
+ - Bug fixes
+ - Performance improvements
 
 ### Version 0.3.0-alpha (5 Jul 2026)
 
