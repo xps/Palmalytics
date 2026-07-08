@@ -13,7 +13,6 @@ using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Palmalytics.Extensions;
 using Palmalytics.Model;
 using Palmalytics.SqlServer.Extensions;
 using Palmalytics.SqlServer.Scripts;
@@ -869,25 +868,34 @@ namespace Palmalytics.SqlServer
             logger.LogDebug("Importing {count:N0} geocoding data entries to database", data.Count());
             var stopwatch = Stopwatch.StartNew();
 
-            // TODO: more performant version?
-            // Maybe "0x" + BitConverter.ToString(address.GetAddressBytes()).Replace("-", "")
-            static string hex(IPAddress address) =>
-                address.GetAddressBytes().Aggregate("0x", (x, y) => x + y.ToString("X2"));
-
             Execute($"TRUNCATE TABLE [{schema}].[{geocodingTable}]");
 
-            // TODO: use SqlBulkCopy
-            foreach (var group in data.GroupBy(x => x.Start.AddressFamily))
+            var table = new DataTable();
+            table.Columns.Add("Start", typeof(byte[]));
+            table.Columns.Add("End", typeof(byte[]));
+            table.Columns.Add("Country", typeof(string));
+            table.Columns.Add("IPVersion", typeof(byte));
+
+            foreach (var row in data)
             {
-                var ipVersion = group.Key == System.Net.Sockets.AddressFamily.InterNetwork ? 4 : 6;
-                foreach (var row in group.Chunk(1_000))
-                {
-                    var sql = new StringBuilder();
-                    sql.Append($"INSERT INTO [{schema}].[{geocodingTable}] ([Start], [End], [IPVersion], [Country]) VALUES ");
-                    sql.Append(row.Select(x => $"({hex(x.Start)}, {hex(x.End)}, {ipVersion}, '{x.Country}')").Join(","));
-                    Execute(sql.ToString());
-                }
+                var ipVersion = (byte)(row.Start.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? 4 : 6);
+                table.Rows.Add(row.Start.GetAddressBytes(), row.End.GetAddressBytes(), row.Country, ipVersion);
             }
+
+            using var connection = new SqlConnection(options.ConnectionString);
+            connection.Open();
+
+            using var bulkCopy = new SqlBulkCopy(connection)
+            {
+                DestinationTableName = $"[{schema}].[{geocodingTable}]"
+            };
+
+            bulkCopy.ColumnMappings.Add("Start", "Start");
+            bulkCopy.ColumnMappings.Add("End", "End");
+            bulkCopy.ColumnMappings.Add("Country", "Country");
+            bulkCopy.ColumnMappings.Add("IPVersion", "IPVersion");
+
+            bulkCopy.WriteToServer(table);
 
             logger.LogDebug("Imported geocoding data - {count:N0} entries in {milliseconds:N0} ms", data.Count(), stopwatch.ElapsedMilliseconds);
         }
