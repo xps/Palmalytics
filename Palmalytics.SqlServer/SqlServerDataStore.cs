@@ -261,7 +261,7 @@ namespace Palmalytics.SqlServer
                 .Paging(page, pageSize)
                 .GetTemplate();
 
-            var data = Query<TableDataItem>(query.RawSql, query.Parameters).ToList();
+            var data = totalSessions > 0 ? Query<TableDataItem>(query.RawSql, query.Parameters).ToList() : [];
 
             return new TableData
             {
@@ -305,7 +305,7 @@ namespace Palmalytics.SqlServer
                 .Paging(page, pageSize)
                 .GetTemplate();
 
-            var data = Query<TableDataItem>(query.RawSql, query.Parameters).ToList();
+            var data = totalSessions > 0 ? Query<TableDataItem>(query.RawSql, query.Parameters).ToList() : [];
 
             return new TableData
             {
@@ -348,7 +348,7 @@ namespace Palmalytics.SqlServer
                 .Paging(page, pageSize)
                 .GetTemplate();
 
-            var data = Query<TableDataItem>(query.RawSql, query.Parameters).ToList();
+            var data = totalSessions > 0 ? Query<TableDataItem>(query.RawSql, query.Parameters).ToList() : [];
 
             return new TableData
             {
@@ -397,7 +397,7 @@ namespace Palmalytics.SqlServer
                 .Paging(page, pageSize)
                 .GetTemplate();
 
-            var data = Query<TableDataItem>(query.RawSql, query.Parameters).ToList();
+            var data = totalSessions > 0 ? Query<TableDataItem>(query.RawSql, query.Parameters).ToList() : [];
 
             return new TableData
             {
@@ -437,7 +437,7 @@ namespace Palmalytics.SqlServer
                 .Paging(page, pageSize)
                 .GetTemplate();
 
-            var data = Query<TableDataItem>(query.RawSql, query.Parameters).ToList();
+            var data = totalSessions > 0 ? Query<TableDataItem>(query.RawSql, query.Parameters).ToList() : [];
 
             return new TableData
             {
@@ -476,7 +476,7 @@ namespace Palmalytics.SqlServer
                 .Paging(page, pageSize)
                 .GetTemplate();
 
-            var data = Query<TableDataItem>(query.RawSql, query.Parameters).ToList();
+            var data = totalSessions > 0 ? Query<TableDataItem>(query.RawSql, query.Parameters).ToList() : [];
 
             return new TableData
             {
@@ -515,7 +515,7 @@ namespace Palmalytics.SqlServer
                 .Paging(page, pageSize)
                 .GetTemplate();
 
-            var data = Query<TableDataItem>(query.RawSql, query.Parameters).ToList();
+            var data = totalSessions > 0 ? Query<TableDataItem>(query.RawSql, query.Parameters).ToList() : [];
 
             return new TableData
             {
@@ -554,7 +554,7 @@ namespace Palmalytics.SqlServer
                 .Paging(page, pageSize)
                 .GetTemplate();
 
-            var data = Query<TableDataItem>(query.RawSql, query.Parameters).ToList();
+            var data = totalSessions > 0 ? Query<TableDataItem>(query.RawSql, query.Parameters).ToList() : [];
 
             return new TableData
             {
