@@ -92,10 +92,10 @@ services.AddPalmalytics(options =>
 
 Currently, Palmalytics requires:
 
-- .NET 6
+- .NET 8
 - SQL Server for storage
 
-Future support is planned for older versions of .NET (including .NET Framework 4.x) as well as other data stores (Postgres, SQLite…).
+We may add support for other data stores (Postgres, SQLite…).
 
 
 ## Project Status

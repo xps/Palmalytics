@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Title>Palmalytics | Server-Side ASP.NET Core Web Analytics</Title>
         <Description>Self-hosted, first-party, server-side web analytics dashboard for ASP.NET Core applications</Description>
