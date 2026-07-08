@@ -1,6 +1,6 @@
 name: Publish to NuGet
 
-# Triggered only when a version tag is pushed, e.g. v0.3.0-alpha
+# Triggered only when a version tag is pushed, e.g. v1.0.0
 on:
   push:
     tags:
@@ -48,7 +48,7 @@ jobs:
         run: dotnet restore
 
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build --configuration Release --no-restore -p:Version=${{ steps.version.outputs.version }}
 
       - name: Pack
         run: |
@@ -64,4 +64,4 @@ jobs:
           user: xps
 
       - name: Push to NuGet
-        run: dotnet nuget push "./artifacts/*.nupkg" --api-key "${{ steps.nuget-login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
+        run: dotnet nuget push "./artifacts/*.nupkg" --api-key "${{ steps.nuget-login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json
