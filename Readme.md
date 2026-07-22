@@ -20,7 +20,7 @@ The data can be stored in the same database your application already uses (e.g. 
 1. Add the [storage-specific NuGet package][0] from the Package Manager Console:
 
     ```shell
-    PM> Install-Package Palmalytics.SqlServer -Pre
+    PM> Install-Package Palmalytics.SqlServer
     ```
 
 2. Register services in your `Startup.cs` and configure the SQL Server storage:
@@ -96,32 +96,6 @@ Currently, Palmalytics requires:
 - SQL Server for storage
 
 We may add support for other data stores (Postgres, SQLite…).
-
-
-## Change log
-
-### Version 1.0.0-rc (8 Jul 2026)
-
- - Now targets .NET 8
- - Updated dependencies
- - Bug fixes
- - Performance improvements
-
-### Version 0.3.0-alpha (5 Jul 2026)
-
- - Automatically decode URLs
- - Updated Dapper
- - Updated public suffix list
- - Added detection of Brave browser
-
-### Version 0.2.0-alpha (12 Oct 2024)
-
- - Added UTM parameters stats to dashboard
- - Added 'not set' values in referrer stats
-
-### Version 0.1.0-alpha (25 Aug 2024)
-
- - Initial version
 
 
 ## Licensing
