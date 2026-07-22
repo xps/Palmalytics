@@ -403,6 +403,7 @@ namespace Palmalytics.Tests.Middleware
             services.AddPalmalytics(x =>
             {
                 x.AutomaticallyDownloadGeocodingData = false;
+                x.EnableAsyncWrites = false;
                 x.UseDataStore(typeof(MemoryDataStore), null);
                 configure?.Invoke(x);
             });
