@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -19,7 +19,9 @@ namespace Palmalytics.Services
 
         public PalmalyticsParserOptions Options => options;
 
-        private static HashSet<string> errors = [];
+        // Use a ConcurrentDictionary since there is no ConcurrentHashSet in the BCL :'(
+        private static readonly ConcurrentDictionary<string, byte> loggedLanguageErrors = new();
+        private const int maxLoggedLanguageErrors = 200;
 
         public RequestParser(
             IUserAgentParser userAgentParser,
@@ -112,7 +114,7 @@ namespace Palmalytics.Services
                         // Since languages are typically ordered by priority, we'll just take the first one
                         var language = str.Capture("^([a-z]{2}(-[a-z]{2})?)", RegexOptions.IgnoreCase);
 
-                        // The convetion is that the first two characters are lower case and the rest are upper case
+                        // The convention is that the first two characters are lower case and the rest are upper case
                         if (language.Length > 2)
                             language = language[..2].ToLower() + language[2..].ToUpper();
                         else
@@ -122,11 +124,8 @@ namespace Palmalytics.Services
                     }
                     catch (Exception x)
                     {
-                        if (!errors.Contains(acceptLanguageHeader))
-                        {
+                        if (loggedLanguageErrors.Count < maxLoggedLanguageErrors && loggedLanguageErrors.TryAdd(acceptLanguageHeader, 0 /* dummy value */))
                             logger.LogWarning(x, "Could not parse Accept-Language header. Value = {header}", acceptLanguageHeader);
-                            errors.Add(acceptLanguageHeader);
-                        }
                     }
                 }
             }
