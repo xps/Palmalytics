@@ -46,20 +46,8 @@ namespace Palmalytics
         public EventHandler<OnBeforeSavingRequestEventArgs> OnBeforeSavingRequest { get; set; }
 
         // Overrideable method to get the client IP address
-        public Func<HttpRequest, IPAddress> GetClientIPAddress { get; set; } = (request) =>
-        {
-            // If behind Cloudflare, use the CF-Connecting-IPv6 or CF-Connecting-IP header
-            if (request.Headers.ContainsKey("CF-Connecting-IPv6"))
-                return IPAddress.Parse(request.Headers["CF-Connecting-IPv6"].ToString());
-            if (request.Headers.ContainsKey("CF-Connecting-IP"))
-                return IPAddress.Parse(request.Headers["CF-Connecting-IP"].ToString());
-
-            // If behind another proxy, use the X-Forwarded-For header
-            if (request.Headers.ContainsKey("X-Forwarded-For"))
-                return IPAddress.Parse(request.Headers["X-Forwarded-For"].ToString().Split(',', StringSplitOptions.RemoveEmptyEntries)[0].Trim());
-
-            return request.HttpContext.Connection.RemoteIpAddress;
-        };
+        public Func<HttpRequest, IPAddress> GetClientIPAddress { get; set; } =
+            (request) => request.HttpContext.Connection.RemoteIpAddress;
     }
 
     public class OnParseRequestEventArgs(HttpContext context, RequestData requestData) : EventArgs

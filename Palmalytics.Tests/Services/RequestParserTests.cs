@@ -200,17 +200,17 @@ namespace Palmalytics.Tests.Services
         }
 
         [Fact]
-        public void Test_RequestParser_Parse_CF_Connecting_IP()
+        public void Test_RequestParser_Ignores_XFF_Header_By_Default()
         {
             // Arrange
-            var options = new PalmalyticsParserOptions { CollectIPAddress = true };
-            var parser = CreateRequestParser(options);
+            var parserOptions = new PalmalyticsParserOptions { CollectIPAddress = true };
+            var parser = CreateRequestParser(parserOptions);
 
             var request = CreateRequest(
+                ipAddress: "125.64.59.175",
                 headers: new()
                 {
-                    { "CF-Connecting-IP", "152.12.65.25" },
-                    { "X-Forwarded-For", "152.12.65.25, 158.64.59.175" }
+                    { "X-Forwarded-For", "152.12.65.25" }
                 }
             );
 
@@ -218,17 +218,19 @@ namespace Palmalytics.Tests.Services
             var result = parser.Parse(request);
 
             // Assert
-            result.IPAddress.Should().Be("152.12.65.25");
+            result.IPAddress.Should().Be("125.64.59.175");
         }
 
         [Fact]
-        public void Test_RequestParser_Parse_X_Forwarded_For()
+        public void Test_RequestParser_Custom_GetClientIPAddress()
         {
             // Arrange
-            var options = new PalmalyticsParserOptions { CollectIPAddress = true };
-            var parser = CreateRequestParser(options);
+            var parserOptions = new PalmalyticsParserOptions { CollectIPAddress = true };
+            var topLevelOptions = new PalmalyticsOptions { GetClientIPAddress = request => IPAddress.Parse(request.Headers["X-Forwarded-For"]) };
+            var parser = CreateRequestParser(parserOptions, topLevelOptions);
 
             var request = CreateRequest(
+                ipAddress: "125.64.59.175",
                 headers: new()
                 {
                     { "X-Forwarded-For", "152.12.65.25" }
@@ -465,9 +467,14 @@ namespace Palmalytics.Tests.Services
 
         #endregion
 
-        private RequestParser CreateRequestParser(PalmalyticsParserOptions options)
+        private RequestParser CreateRequestParser(PalmalyticsParserOptions parserOptions)
         {
-            return ActivatorUtilities.CreateInstance<RequestParser>(serviceProvider, Options.Create(options));
+            return ActivatorUtilities.CreateInstance<RequestParser>(serviceProvider, Options.Create(parserOptions));
+        }
+
+        private RequestParser CreateRequestParser(PalmalyticsParserOptions parserOptions, PalmalyticsOptions topLevelOptions)
+        {
+            return ActivatorUtilities.CreateInstance<RequestParser>(serviceProvider, Options.Create(parserOptions), Options.Create(topLevelOptions));
         }
     }
 }

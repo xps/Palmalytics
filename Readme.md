@@ -88,6 +88,35 @@ services.AddPalmalytics(options =>
 ```
 
 
+## Getting the user's IP address
+
+Palmalytics uses the client IP address for geolocation (country) and for the `IgnoreIPAddresses` filter. By default, it uses the IP address of the connection (`HttpContext.Connection.RemoteIpAddress`).
+
+If your application runs behind a reverse proxy, a load balancer, or a CDN (e.g. Cloudflare), the connection IP will be the proxy's, not the visitor's. The real client IP is then usually passed in a forwarding header such as `X-Forwarded-For` or `CF-Connecting-IP`.
+
+If you trust those headers, you can override `GetClientIPAddress` to use them instead of the connection IP:
+
+```csharp
+services.AddPalmalytics(options =>
+{
+    options.GetClientIPAddress = (request) =>
+    {
+        if (request.Headers.TryGetValue("X-Forwarded-For", out var header))
+        {
+            var firstValue = header.ToString().Split(',', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault()?.Trim();
+            if (IPAddress.TryParse(firstValue, out var ip))
+                return ip;
+        }
+
+        return request.HttpContext.Connection.RemoteIpAddress;
+    };
+
+    // ... other options
+});
+```
+
+Alternatively, you can use a middleware that reads the header and updates `RemoteIpAddress`, see [Forwarded Headers Middleware][1].
+
 ## Requirements
 
 Currently, Palmalytics requires:
@@ -122,3 +151,4 @@ Contributions are welcome, whether they are bug reports, feature requests, or co
 By submitting a pull request, you relinquish any rights or claims to the changes you submit to the project and transfer the copyright of those changes to the project owner.
 
 [0]: https://www.nuget.org/packages?q=palmalytics
+[1]: https://learn.microsoft.com/aspnet/core/host-and-deploy/proxy-load-balancer

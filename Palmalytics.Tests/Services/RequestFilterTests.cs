@@ -191,7 +191,12 @@ namespace Palmalytics.Tests.Services
             var options = new PalmalyticsFilterOptions();
             options.IgnoreIPAddresses.Add(IPAddress.Parse("2.2.2.2"));
 
-            var filter = CreateRequestFilter(options);
+            var topLevelOptions = new PalmalyticsOptions
+            {
+                GetClientIPAddress = request =>
+                    IPAddress.Parse(request.Headers["X-Forwarded-For"])
+            };
+            var filter = CreateRequestFilter(options, topLevelOptions);
 
             var request1 = CreateRequest(ipAddress: "1.1.1.1", headers: new()
             {
@@ -331,9 +336,14 @@ namespace Palmalytics.Tests.Services
             filter.ShouldTrackRequest(request).Should().BeFalse();
         }
 
-        private RequestFilter CreateRequestFilter(PalmalyticsFilterOptions options)
+        private RequestFilter CreateRequestFilter(PalmalyticsFilterOptions filterOptions)
         {
-            return ActivatorUtilities.CreateInstance<RequestFilter>(serviceProvider, Options.Create(options));
+            return ActivatorUtilities.CreateInstance<RequestFilter>(serviceProvider, Options.Create(filterOptions));
+        }
+
+        private RequestFilter CreateRequestFilter(PalmalyticsFilterOptions filterOptions, PalmalyticsOptions topLevelOptions)
+        {
+            return ActivatorUtilities.CreateInstance<RequestFilter>(serviceProvider, Options.Create(filterOptions), Options.Create(topLevelOptions));
         }
     }
 }
