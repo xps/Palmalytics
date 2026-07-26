@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Palmalytics.Extensions;
@@ -13,6 +14,13 @@ namespace Palmalytics.Services
         private readonly ILogger logger = logger;
 
         private static readonly string[] BotKeywords = ["google", "bot", "spider", "crawler", "spider", "http", "https", "feed", "archive", "index", "search", "monitor", "watcher", "check", "validator", "validator", "validator", "preview", "verification", "agent", "mailto", ".com"];
+
+        // Regex validating an entry in the Sec-CH-UA header, e.g. `"Google Chrome";v="116"`
+        private static readonly Regex clientHintBrandRegex = new(
+            """
+            "([^"]*)"\s*;\s*v\s*=\s*"([^"]*)"
+            """,
+            RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
         // This maps known values for the Sec-CH-UA header to the values we want to display
         private readonly Dictionary<string, string> ClientHintsBrowsers = new()
@@ -305,15 +313,16 @@ namespace Palmalytics.Services
         {
             var result = new Dictionary<string, string>();
 
-            var parts = clientHintUserAgent.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                .Select(x => x.Trim());
-
-            foreach (var part in parts)
+            if (!string.IsNullOrWhiteSpace(clientHintUserAgent) && clientHintUserAgent.Length <= 500)
             {
-                var brand = part.Split(';')[0].Trim('"');
-                var version = part.Split(';')[1].Capture("v=\"(.+?)\"");
-                if (!string.IsNullOrWhiteSpace(brand) && !string.IsNullOrWhiteSpace(version))
-                    result[brand] = version;
+                foreach (Match match in clientHintBrandRegex.Matches(clientHintUserAgent))
+                {
+                    var brand = match.Groups[1].Value.Trim();
+                    var version = match.Groups[2].Value.Trim();
+
+                    if (!string.IsNullOrWhiteSpace(brand) && !string.IsNullOrWhiteSpace(version))
+                        result[brand] = version;
+                }
             }
 
             return result;

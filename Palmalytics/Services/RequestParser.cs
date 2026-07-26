@@ -21,7 +21,9 @@ namespace Palmalytics.Services
 
         // Use a ConcurrentDictionary since there is no ConcurrentHashSet in the BCL :'(
         private static readonly ConcurrentDictionary<string, byte> loggedLanguageErrors = new();
-        private const int maxLoggedLanguageErrors = 200;
+        private static readonly ConcurrentDictionary<string, byte> loggedUserAgentErrors = new();
+        private const int maxLoggedLanguageErrors = 50;
+        private const int maxLoggedUserAgentErrors = 50;
 
         public RequestParser(
             IUserAgentParser userAgentParser,
@@ -79,7 +81,10 @@ namespace Palmalytics.Services
                 }
                 catch (Exception x)
                 {
-                    logger.LogError(x, "Failed to parse request's user agent. Request:\n{request}", request.GetDebugString());
+                    var clientHints = request.Headers["Sec-CH-UA"].ToString();
+                    var key = $"{requestData.UserAgent}|{clientHints}";
+                    if (loggedUserAgentErrors.Count < maxLoggedUserAgentErrors && loggedUserAgentErrors.TryAdd(key, 0 /* dummy value */))
+                        logger.LogWarning(x, "Could not parse the request's user agent. User-Agent = {userAgent}, Sec-CH-UA = {clientHints}", requestData.UserAgent, clientHints);
                 }
             }
 
@@ -107,12 +112,14 @@ namespace Palmalytics.Services
             if (!string.IsNullOrWhiteSpace(acceptLanguageHeader))
             {
                 var str = acceptLanguageHeader.ToString().Trim();
-                if (str.Length >= 2)
+                if (str.Length >= 2 && str.Length <= 200)
                 {
                     try
                     {
                         // Since languages are typically ordered by priority, we'll just take the first one
                         var language = str.Capture("^([a-z]{2}(-[a-z]{2})?)", RegexOptions.IgnoreCase);
+                        if (string.IsNullOrWhiteSpace(language))
+                            return null;
 
                         // The convention is that the first two characters are lower case and the rest are upper case
                         if (language.Length > 2)

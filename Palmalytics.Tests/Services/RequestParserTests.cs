@@ -452,6 +452,10 @@ namespace Palmalytics.Tests.Services
         [InlineData("de,*", "de")]
         [InlineData("de,en,*", "de")]
         [InlineData("es-419,es;q=0.9", "es")]
+        [InlineData("*,en;q=0.5", null)]
+        [InlineData("q=0.9", null)]
+        [InlineData("1234", null)]
+        [InlineData("!!", null)]
         public void Test_RequestParser_ParseLanguage(string input, string output)
         {
             // Arrange
