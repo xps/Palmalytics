@@ -183,8 +183,8 @@ namespace Palmalytics.Tests.Services
                 headers: new()
                 {
                     { "Sec-CH-UA", """"Not/A)Brand";v="99", "Google Chrome";v="116", "Chromium";v="116"""" },
-                    { "Sec-CH-UA-Platform", "Windows" },
-                    //{ "Sec-CH-UA-Platform-Version", "15.0.0" }, // TODO
+                    { "Sec-CH-UA-Platform", "\"Windows\"" },
+                    //{ "Sec-CH-UA-Platform-Version", "\"15.0.0\"" }, // TODO
                     { "Sec-CH-UA-Mobile", "?0" },
                 }
             );

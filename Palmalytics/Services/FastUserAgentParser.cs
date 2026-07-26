@@ -22,8 +22,8 @@ namespace Palmalytics.Services
             """,
             RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
-        // This maps known values for the Sec-CH-UA header to the values we want to display
-        private readonly Dictionary<string, string> ClientHintsBrowsers = new()
+        // Maps known values for the Sec-CH-UA header to the values we want to display
+        private readonly Dictionary<string, string> ClientHintsBrowsers = new(StringComparer.OrdinalIgnoreCase)
         {
             { "Google Chrome", "Chrome" },
             { "Microsoft Edge", "Edge" },
@@ -32,16 +32,64 @@ namespace Palmalytics.Services
             { "Brave", "Brave" }
         };
 
+        // Maps known values for the Sec-CH-UA-Platform header to the values we want to display
+        private static readonly Dictionary<string, string> ClientHintsPlatforms = new(StringComparer.OrdinalIgnoreCase)
+        {
+            { "Windows", "Windows" },
+            { "macOS", "Mac" },
+            { "Linux", "Linux" },
+            { "Android", "Android" },
+            { "iOS", "iOS" },
+            { "Chrome OS", "Chrome OS" },
+            { "Chromium OS", "Chrome OS" },
+            { "Unknown", null }
+        };
+
         public virtual Device GetDevice(HttpRequest request)
         {
-            if (request.Headers.ContainsKey("Sec-CH-UA"))
-                return ParseClientHints(request.Headers);
-
+            // Start with the user agent
             var userAgent = request.Headers["User-Agent"].ToString();
-            if (!string.IsNullOrWhiteSpace(userAgent))
-                return ParseUserAgent(userAgent);
+            var device = !string.IsNullOrWhiteSpace(userAgent) ? ParseUserAgent(userAgent) : null;
 
-            return null;
+            if (request.Headers.ContainsKey("Sec-CH-UA"))
+            {
+                // Then read client hints
+                var hints = ParseClientHints(request.Headers);
+
+                // If nothing from client hints keep user agent only
+                if (device == null)
+                    return hints;
+
+                // We got both, combine them
+                CombineDeviceInfo(device, hints);
+            }
+
+            return device;
+        }
+
+        private static void CombineDeviceInfo(Device userAgentDevice, Device clientHintsDevice)
+        {
+            if (!string.IsNullOrWhiteSpace(clientHintsDevice.BrowserName))
+            {
+                userAgentDevice.BrowserName = clientHintsDevice.BrowserName;
+                userAgentDevice.BrowserVersion = clientHintsDevice.BrowserVersion;
+            }
+
+            if (!string.IsNullOrWhiteSpace(clientHintsDevice.OSName))
+            {
+                // If we're going to keep the client hints OS (below) and it's different from the user agent OS
+                // we can't keep the user agent OS version
+                if (!string.Equals(userAgentDevice.OSName, clientHintsDevice.OSName, StringComparison.OrdinalIgnoreCase))
+                    userAgentDevice.OSVersion = null;
+
+                userAgentDevice.OSName = clientHintsDevice.OSName;
+            }
+
+            if (!string.IsNullOrWhiteSpace(clientHintsDevice.OSVersion))
+                userAgentDevice.OSVersion = clientHintsDevice.OSVersion;
+
+            if (clientHintsDevice.IsMobile != null)
+                userAgentDevice.IsMobile = clientHintsDevice.IsMobile;
         }
 
         public virtual bool DetectBot(string userAgent)
@@ -69,10 +117,10 @@ namespace Palmalytics.Services
             }
 
             if (headers.ContainsKey("Sec-CH-UA-Platform"))
-                device.OSName = headers["Sec-CH-UA-Platform"];
+                device.OSName = MapClientHintPlatform(Unquote(headers["Sec-CH-UA-Platform"].ToString()));
 
             if (headers.ContainsKey("Sec-CH-UA-Platform-Version"))
-                device.OSVersion = headers["Sec-CH-UA-Platform-Version"];
+                device.OSVersion = Unquote(headers["Sec-CH-UA-Platform-Version"].ToString());
 
             if (headers.ContainsKey("Sec-CH-UA-Mobile"))
             {
@@ -84,6 +132,23 @@ namespace Palmalytics.Services
             }
 
             return device;
+        }
+
+        private static string MapClientHintPlatform(string platform)
+        {
+            if (string.IsNullOrWhiteSpace(platform))
+                return null;
+
+            return ClientHintsPlatforms.TryGetValue(platform, out var mapped) ? mapped : platform;
+        }
+
+        // Removes quotes around a string value
+        private static string Unquote(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return null;
+
+            return value.Trim().Trim('"').Trim().NullIfEmpty();
         }
 
         public virtual Device ParseUserAgent(string userAgent)

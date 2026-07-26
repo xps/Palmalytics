@@ -22,8 +22,8 @@ namespace Palmalytics.Tests.Services
                 headers: new()
                 {
                     { "Sec-CH-UA", """"Not/A)Brand";v="99", "Google Chrome";v="116", "Chromium";v="116"""" },
-                    { "Sec-CH-UA-Platform", "Windows" },
-                    // { "Sec-CH-UA-Platform-Version", "15.0.0" }, // TODO
+                    { "Sec-CH-UA-Platform", "\"Windows\"" },
+                    // { "Sec-CH-UA-Platform-Version", "\"15.0.0\"" }, // TODO
                     { "Sec-CH-UA-Mobile", "?0" },
                 }
             );
@@ -72,8 +72,8 @@ namespace Palmalytics.Tests.Services
             var request = CreateRequest(headers: new()
             {
                 { "sec-ch-ua", """"Not/A)Brand";v="99", "Google Chrome";v="115", "Chromium";v="115"""" },
-                { "sec-ch-ua-platform", "Windows" },
-                { "sec-ch-ua-platform-version", "11" },
+                { "sec-ch-ua-platform", "\"Windows\"" },
+                { "sec-ch-ua-platform-version", "\"11\"" },
                 { "sec-ch-ua-mobile", "?0" },
             });
 
