@@ -6,34 +6,33 @@ namespace Palmalytics.Tests.Integration
 {
     public class DashboardTests
     {
-        [Fact(Skip = "Memory data store does not implement GetBrowsers")]
-        public async Task Test_Dashboard_Api_Browsers()
+        [Fact]
+        public async Task Test_Dashboard_Api_Version()
         {
             var webApplicationFactory = new TestWebApplicationFactory<MyStartup>();
             var client = webApplicationFactory.CreateClient(new WebApplicationFactoryClientOptions());
 
-            var response = await client.GetAsync("/palmalytics/api/browsers");
+            var response = await client.GetAsync("/palmalytics/api/version");
             var content = await response.Content.ReadAsStringAsync();
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
             content.Should().NotBeNullOrEmpty();
-            content.Should().Contain("Chrome");
+            content.Should().Contain("version");
         }
 
-        [Fact(Skip = "Method is commented out")]
-        public async Task Test_Dashboard_Api_LastRequests()
+        [Theory]
+        [InlineData("/palmalytics/api/type")]
+        [InlineData("/palmalytics/api/hash-code")]
+        [InlineData("/palmalytics/api/does-not-exist")]
+        public async Task Test_Dashboard_Api_404s(string path)
         {
             var webApplicationFactory = new TestWebApplicationFactory<MyStartup>();
             var client = webApplicationFactory.CreateClient(new WebApplicationFactoryClientOptions());
 
-            var response = await client.GetAsync("/palmalytics/api/last-requests");
-            var content = await response.Content.ReadAsStringAsync();
+            var response = await client.GetAsync(path);
 
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-            response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
-            content.Should().NotBeNullOrEmpty();
-            content.Should().Contain("requests");
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Fact]

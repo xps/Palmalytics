@@ -114,66 +114,79 @@ namespace Palmalytics.Tests.Dashboard
             {
             }
 
+            [ApiEndpoint]
             public Result GetTestNoParam()
             {
                 return Content("GetTestNoParam", "text/plain");
             }
 
+            [ApiEndpoint]
             public Result GetTestStringParam(string value)
             {
                 return Content($"GetTestStringParam: {value}", "text/plain");
             }
 
+            [ApiEndpoint]
             public Result GetTestDateParam(DateTime value)
             {
                 return Content($"GetTestDateParam: {value:yyyy-MM-dd HH:mm:ss}", "text/plain");
             }
 
+            [ApiEndpoint]
             public Result GetTestNullableDateParam(DateTime? value)
             {
                 return Content($"GetTestNullableDateParam: {value:yyyy-MM-dd HH:mm:ss}", "text/plain");
             }
 
+            [ApiEndpoint]
             public Result GetTestBoolParam(bool value)
             {
                 return Content($"GetTestBoolParam: {value}", "text/plain");
             }
 
+            [ApiEndpoint]
             public Result GetTestNullableBoolParam(bool? value)
             {
                 return Content($"GetTestNullableBoolParam: {value}", "text/plain");
             }
 
+            [ApiEndpoint]
             public Result GetTestIntParam(int value)
             {
                 return Content($"GetTestIntParam: {value}", "text/plain");
             }
 
+            [ApiEndpoint]
             public Result GetTestNullableIntParam(int? value)
             {
                 return Content($"GetTestNullableIntParam: {value}", "text/plain");
             }
 
+            [ApiEndpoint]
             public Result GetTestEnumParam(Interval value)
             {
                 return Content($"GetTestEnumParam: {value}", "text/plain");
             }
 
+            [ApiEndpoint]
             public Result GetTestNullableEnumParam(Interval? value)
             {
                 return Content($"GetTestNullableEnumParam: {value}", "text/plain");
             }
 
+            [ApiEndpoint]
             public Result GetTestMultipleParams(int x, string y, bool z)
             {
                 return Content($"GetTestMultipleParams: {x}|{y}|{z}", "text/plain");
             }
 
+            [ApiEndpoint]
             public Result GetTestOptionalParam(int value = 10)
             {
                 return Content($"GetTestOptionalParam: {value}", "text/plain");
             }
 
+            [ApiEndpoint]
             public Result GetTestObjectParam(ObjectParam obj)
             {
                 return Content($"GetTestObjectParam: {obj?.Value1}|{obj?.Value2}", "text/plain");

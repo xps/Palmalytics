@@ -58,6 +58,11 @@ namespace Palmalytics.Dashboard
             // We'll map GET /some-data to GetSomeData()
             var methodName = request.Method.Capitalize() + request.Path.Value.TrimStart('/').ConvertKebabToPascalCase();
             var method = GetType().GetMethod(methodName);
+
+            // Methods without the [ApiEndpoint] attribute can't be reached
+            if (method == null || !method.IsDefined(typeof(ApiEndpointAttribute)))
+                return null;
+
             return method;
         }
 
@@ -118,6 +123,7 @@ namespace Palmalytics.Dashboard
             return value;
         }
 
+        [ApiEndpoint]
         public Result GetVersion()
         {
             var assembly = Assembly.GetExecutingAssembly();
@@ -130,6 +136,7 @@ namespace Palmalytics.Dashboard
             });
         }
 
+        [ApiEndpoint]
         public Result GetPerformanceStats()
         {
             var timings = Enumerable.Reverse(TrackingMiddleware.PerformanceStats);
@@ -147,6 +154,7 @@ namespace Palmalytics.Dashboard
             return Json(stats);
         }
 
+        [ApiEndpoint]
         public Result GetTopData(string period, Filters filters)
         {
             var dates = DateHelpers.GetDateRangeForPeriod(period);
@@ -155,6 +163,7 @@ namespace Palmalytics.Dashboard
             return Json(chartData);
         }
 
+        [ApiEndpoint]
         public Result GetChart(string period, Interval interval, string property, Filters filters)
         {
             var dates = DateHelpers.GetDateRangeForPeriod(period);
@@ -163,6 +172,7 @@ namespace Palmalytics.Dashboard
             return Json(chartData);
         }
 
+        [ApiEndpoint]
         public Result GetBrowsers(string period, Filters filters, int page = 1)
         {
             var dates = DateHelpers.GetDateRangeForPeriod(period);
@@ -170,6 +180,7 @@ namespace Palmalytics.Dashboard
             return Json(chartData);
         }
 
+        [ApiEndpoint]
         public Result GetOperatingSystems(string period, Filters filters, int page = 1)
         {
             var dates = DateHelpers.GetDateRangeForPeriod(period);
@@ -177,6 +188,7 @@ namespace Palmalytics.Dashboard
             return Json(chartData);
         }
 
+        [ApiEndpoint]
         public Result GetReferrers(string period, Filters filters, int page = 1)
         {
             var dates = DateHelpers.GetDateRangeForPeriod(period);
@@ -184,6 +196,7 @@ namespace Palmalytics.Dashboard
             return Json(chartData);
         }
 
+        [ApiEndpoint]
         public Result GetUtmParameters(string parameter, string period, Filters filters, int page = 1)
         {
             var dates = DateHelpers.GetDateRangeForPeriod(period);
@@ -191,6 +204,7 @@ namespace Palmalytics.Dashboard
             return Json(chartData);
         }
 
+        [ApiEndpoint]
         public Result GetCountries(string period, Filters filters, int page = 1)
         {
             var dates = DateHelpers.GetDateRangeForPeriod(period);
@@ -198,6 +212,7 @@ namespace Palmalytics.Dashboard
             return Json(chartData);
         }
 
+        [ApiEndpoint]
         public Result GetTopPages(string period, Filters filters, int page = 1)
         {
             var dates = DateHelpers.GetDateRangeForPeriod(period);
@@ -205,6 +220,7 @@ namespace Palmalytics.Dashboard
             return Json(chartData);
         }
 
+        [ApiEndpoint]
         public Result GetEntryPages(string period, Filters filters, int page = 1)
         {
             var dates = DateHelpers.GetDateRangeForPeriod(period);
@@ -212,6 +228,7 @@ namespace Palmalytics.Dashboard
             return Json(chartData);
         }
 
+        [ApiEndpoint]
         public Result GetExitPages(string period, Filters filters, int page = 1)
         {
             var dates = DateHelpers.GetDateRangeForPeriod(period);
@@ -220,6 +237,7 @@ namespace Palmalytics.Dashboard
         }
 
         // Not used for now
+        // [ApiEndpoint]
         // public Result GetLastRequests()
         // {
         //     var requests = dataStore.GetLastRequests();
