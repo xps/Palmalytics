@@ -66,7 +66,7 @@ namespace Palmalytics.Tests.Services
             device.IsMobile.Should().Be(isMobile);
         }
 
-        [Fact(Skip = "HttpRequestMoq needs to be fixed as it reads headers case-sensitively")]
+        [Fact]
         public void Test_FastUserAgentParser_Parses_ClientHints_In_LowerCase()
         {
             var request = CreateRequest(headers: new()

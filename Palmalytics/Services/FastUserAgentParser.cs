@@ -34,15 +34,10 @@ namespace Palmalytics.Services
 
         public virtual Device GetDevice(HttpRequest request)
         {
-            var headers = request.Headers.ToDictionary(x => x.Key, x => x.Value.ToString());
-            return GetDevice(request.Headers["User-Agent"], headers);
-        }
+            if (request.Headers.ContainsKey("Sec-CH-UA"))
+                return ParseClientHints(request.Headers);
 
-        public virtual Device GetDevice(string userAgent, Dictionary<string, string> headers = null)
-        {
-            if (headers != null && headers.ContainsKey("Sec-CH-UA"))
-                return ParseClientHints(headers);
-
+            var userAgent = request.Headers["User-Agent"].ToString();
             if (!string.IsNullOrWhiteSpace(userAgent))
                 return ParseUserAgent(userAgent);
 
@@ -62,13 +57,13 @@ namespace Palmalytics.Services
             return false;
         }
 
-        public virtual Device ParseClientHints(Dictionary<string, string> headers)
+        public virtual Device ParseClientHints(IHeaderDictionary headers)
         {
             var device = new Device();
 
             if (headers.ContainsKey("Sec-CH-UA"))
             {
-                var browser = GetBrowserFromClientHint(headers["Sec-CH-UA"]);
+                var browser = GetBrowserFromClientHint(headers["Sec-CH-UA"].ToString());
                 device.BrowserName = browser?.Name;
                 device.BrowserVersion = browser?.Version;
             }
@@ -81,7 +76,7 @@ namespace Palmalytics.Services
 
             if (headers.ContainsKey("Sec-CH-UA-Mobile"))
             {
-                var value = headers["Sec-CH-UA-Mobile"];
+                var value = headers["Sec-CH-UA-Mobile"].ToString();
                 if (value == "?1")
                     device.IsMobile = true;
                 else if (value == "?0")
