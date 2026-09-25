@@ -129,7 +129,7 @@ We may add support for other data stores (Postgres, SQLite…).
 
 ## Licensing
 
-Copyright 2026 Xavier Poinas
+Copyright 2024-2026 Xavier Poinas
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
