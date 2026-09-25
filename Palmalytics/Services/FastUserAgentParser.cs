@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -39,6 +40,10 @@ namespace Palmalytics.Services
             { "Yandex", "Yandex" },
             { "XiaoMiBrowser", "Xiaomi Browser" }
         };
+
+        // Use a ConcurrentDictionary since there is no ConcurrentHashSet in the BCL :'(
+        private static readonly ConcurrentDictionary<string, byte> loggedClientHintsErrors = new();
+        private const int maxLoggedClientHintsErrors = 50;
 
         // Brands in the Sec-CH-UA header that indicate a bot
         private static readonly string[] ClientHintsBotBrands = ["HeadlessChrome"];
@@ -447,14 +452,22 @@ namespace Palmalytics.Services
                     return new Browser { Name = "Chrome", Version = chromiumVersion };
                 }
 
-                logger.LogDebug("Could not detect known browser from Sec-CH-UA header: {header} (no match)", clientHintUserAgent);
+                if (ShouldLogClientHintsError(clientHintUserAgent))
+                    logger.LogDebug("Could not detect known browser from Sec-CH-UA header: {header} (no match)", clientHintUserAgent);
             }
             else
             {
-                logger.LogDebug("Could not detect known browser from Sec-CH-UA header: {header} ({count} matches)", clientHintUserAgent, names.Count);
+                if (ShouldLogClientHintsError(clientHintUserAgent))
+                    logger.LogDebug("Could not detect known browser from Sec-CH-UA header: {header} ({count} matches)", clientHintUserAgent, names.Count);
             }
 
             return null;
+        }
+
+        // Only log each distinct header once, up to a max count
+        private static bool ShouldLogClientHintsError(string clientHintUserAgent)
+        {
+            return loggedClientHintsErrors.Count < maxLoggedClientHintsErrors && loggedClientHintsErrors.TryAdd(clientHintUserAgent ?? "", 0 /* dummy value */);
         }
     }
 }
