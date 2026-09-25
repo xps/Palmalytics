@@ -29,8 +29,19 @@ namespace Palmalytics.Services
             { "Microsoft Edge", "Edge" },
             { "Safari", "Safari" },
             { "Firefox", "Firefox" },
-            { "Brave", "Brave" }
+            { "Brave", "Brave" },
+            { "Samsung Internet", "Samsung Internet" },
+            { "Opera", "Opera" },
+            { "Opera GX", "Opera" },
+            { "OperaMobile", "Opera" },
+            { "DuckDuckGo", "DuckDuckGo" },
+            { "Vivaldi", "Vivaldi" },
+            { "Yandex", "Yandex" },
+            { "XiaoMiBrowser", "Xiaomi Browser" }
         };
+
+        // Brands in the Sec-CH-UA header that indicate a bot
+        private static readonly string[] ClientHintsBotBrands = ["HeadlessChrome"];
 
         // Maps known values for the Sec-CH-UA-Platform header to the values we want to display
         private static readonly Dictionary<string, string> ClientHintsPlatforms = new(StringComparer.OrdinalIgnoreCase)
@@ -54,22 +65,31 @@ namespace Palmalytics.Services
             if (request.Headers.ContainsKey("Sec-CH-UA"))
             {
                 // Then read client hints
-                var hints = ParseClientHints(request.Headers);
+                var hints = ParseClientHints(request.Headers, out var isGenericBrowser);
 
-                // If nothing from client hints keep user agent only
+                // If nothing from user agent keep client hints only
                 if (device == null)
                     return hints;
 
+                if (hints.IsBot)
+                {
+                    device.IsBot = true;
+                    return device;
+                }
+
                 // We got both, combine them
-                CombineDeviceInfo(device, hints);
+                CombineDeviceInfo(device, hints, isGenericBrowser);
             }
 
             return device;
         }
 
-        private static void CombineDeviceInfo(Device userAgentDevice, Device clientHintsDevice)
+        private static void CombineDeviceInfo(Device userAgentDevice, Device clientHintsDevice, bool isGenericBrowser)
         {
-            if (!string.IsNullOrWhiteSpace(clientHintsDevice.BrowserName))
+            // A generic browser from client hints (plain Chromium) should not override a more specific one from the user agent
+            var keepUserAgentBrowser = isGenericBrowser && !string.IsNullOrWhiteSpace(userAgentDevice.BrowserName);
+
+            if (!string.IsNullOrWhiteSpace(clientHintsDevice.BrowserName) && !keepUserAgentBrowser)
             {
                 userAgentDevice.BrowserName = clientHintsDevice.BrowserName;
                 userAgentDevice.BrowserVersion = clientHintsDevice.BrowserVersion;
@@ -107,11 +127,24 @@ namespace Palmalytics.Services
 
         public virtual Device ParseClientHints(IHeaderDictionary headers)
         {
+            return ParseClientHints(headers, out _);
+        }
+
+        private Device ParseClientHints(IHeaderDictionary headers, out bool isGenericBrowser)
+        {
             var device = new Device();
+            isGenericBrowser = false;
 
             if (headers.ContainsKey("Sec-CH-UA"))
             {
-                var browser = GetBrowserFromClientHint(headers["Sec-CH-UA"].ToString());
+                var brands = ParseClientHintUserAgent(headers["Sec-CH-UA"].ToString());
+                if (brands.Keys.Any(x => ClientHintsBotBrands.Contains(x, StringComparer.OrdinalIgnoreCase)))
+                {
+                    device.IsBot = true;
+                    return device;
+                }
+
+                var browser = GetBrowserFromClientHint(headers["Sec-CH-UA"].ToString(), brands, out isGenericBrowser);
                 device.BrowserName = browser?.Name;
                 device.BrowserVersion = browser?.Version;
             }
@@ -371,7 +404,7 @@ namespace Palmalytics.Services
 
         private Dictionary<string, string> ParseClientHintUserAgent(string clientHintUserAgent)
         {
-            var result = new Dictionary<string, string>();
+            var result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
             if (!string.IsNullOrWhiteSpace(clientHintUserAgent) && clientHintUserAgent.Length <= 500)
             {
@@ -388,40 +421,40 @@ namespace Palmalytics.Services
             return result;
         }
 
-        private Browser GetBrowserFromClientHint(string clientHintUserAgent)
+        private Browser GetBrowserFromClientHint(string clientHintUserAgent, Dictionary<string, string> brands, out bool isGeneric)
         {
-            var brands = ParseClientHintUserAgent(clientHintUserAgent);
+            isGeneric = false;
 
-            var matches = brands.Keys.Intersect(ClientHintsBrowsers.Keys).ToList();
-            if (matches.Count == 1)
+            var matches = brands.Keys.Intersect(ClientHintsBrowsers.Keys, StringComparer.OrdinalIgnoreCase).ToList();
+
+            var names = matches.Select(x => ClientHintsBrowsers[x]).Distinct().ToList();
+            if (names.Count == 1)
             {
-                var brand = matches.Single();
+                var name = names.Single();
+                var brand = matches.FirstOrDefault(x => string.Equals(x, name, StringComparison.OrdinalIgnoreCase)) ?? matches.First();
+
                 return new Browser
                 {
-                    Name = MapToDisplayBrowserName(brand),
+                    Name = name,
                     Version = brands[brand]
                 };
             }
-            else if (matches.Count == 0)
+            else if (names.Count == 0)
             {
+                if (brands.TryGetValue("Chromium", out var chromiumVersion))
+                {
+                    isGeneric = true;
+                    return new Browser { Name = "Chrome", Version = chromiumVersion };
+                }
+
                 logger.LogDebug("Could not detect known browser from Sec-CH-UA header: {header} (no match)", clientHintUserAgent);
             }
             else
             {
-                logger.LogDebug("Could not detect known browser from Sec-CH-UA header: {header} ({count} matches)", clientHintUserAgent, matches.Count);
+                logger.LogDebug("Could not detect known browser from Sec-CH-UA header: {header} ({count} matches)", clientHintUserAgent, names.Count);
             }
 
             return null;
-        }
-
-        private string MapToDisplayBrowserName(string browserName)
-        {
-            return browserName switch
-            {
-                "Google Chrome" => "Chrome",
-                "Microsoft Edge" => "Edge",
-                _ => browserName,
-            };
         }
     }
 }
